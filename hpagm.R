@@ -1,7 +1,5 @@
 hpagm<-function(npart=2,min_by_part=5)
 {
-#m = matriz com as arestas - colunas 1 e 2 e pesos das arestas a partir da
-#coluna 3
 #npart = numero de componentes espaciais = grupos com contiguidade
 #min_by_part = numero de objetos por grupo
 #Md - matriz de distâncias
@@ -45,15 +43,15 @@ nucleos<-detectCores(logical=F)
 clust<-makeCluster(nucleos)
 clusterEvalQ(clust, library(igraph))
 ####Leituras#####################################################################
-setwd("E:\\Trabs\\Projetos_Finais_ENCE\\Projeto_Nathan_e_Luis_Felipe_2024\\")
+setwd(":\\Distancias\\")  #Diretório com todos as matrizes distância D e matriz de Vizinhanças V
 library(readxl)
-m<-as.matrix(read_excel("distancias_vizinhos_vscc.xlsx"))
+m<-as.matrix(read_excel("distancias_vizinhos.xlsx"))
 y=t(apply(m[,1:2],1,sort))
 ix<-which(duplicated.matrix(y)==FALSE)
 m<-m[ix,]
-Deuclidiana<-as.matrix(read_excel("matriz_euclid_vscc.xlsx"))
-DManhattan<-as.matrix(read_excel("matriz_manhat_vscc.xlsx"))
-DMahalanobis<-as.matrix(read_excel("matriz_mahal_vscc.xlsx"))
+Deuclidiana<-as.matrix(read_excel("matriz_euclid.xlsx"))
+DManhattan<-as.matrix(read_excel("matriz_manhat.xlsx"))
+DMahalanobis<-as.matrix(read_excel("matriz_mahal.xlsx"))
 #################################################################################
 
 
@@ -80,7 +78,7 @@ if (is.null(solucoes_viaveis)==FALSE)
   }
  else {sv=rep(0,nnos);smelhor1=0} 
  write.table(sv,
-            file=paste("Solucao_Euclidiana_Grupos_VSCC_",npart,"_Cap_",min_by_part,".txt",sep=""),
+            file=paste("Solucao_Euclidiana_Grupos_",npart,"_Cap_",min_by_part,".txt",sep=""),
             row.names = FALSE,
             col.names = FALSE)
 ######################Para Manhattan#######################
@@ -95,7 +93,7 @@ if (is.null(solucoes_viaveis)==FALSE)
   }
 else {sv<-rep(0,nnos);smelhor2=0}
 write.table(sv,
-            file=paste("Solucao_Manhattan_Grupos_VSCC_",npart,"_Cap_",min_by_part,".txt",sep=""),
+            file=paste("Solucao_Manhattan_Grupos_",npart,"_Cap_",min_by_part,".txt",sep=""),
             row.names = FALSE,
             col.names = FALSE)
 
@@ -112,7 +110,7 @@ if (is.null(solucoes_viaveis)==FALSE)
  }
 else {sv=rep(0,nnos);smelhor3=0}
 write.table(sv,
-            file=paste("Solucao_Mahalanobis_Grupos_VSCC_",npart,"_Cap_",min_by_part,".txt",sep=""),
+            file=paste("Solucao_Mahalanobis_Grupos_",npart,"_Cap_",min_by_part,".txt",sep=""),
             row.names = FALSE,
             col.names = FALSE)
 
